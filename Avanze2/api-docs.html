@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVault | API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="background: var(--bg); display: block; overflow-y: auto;">
+
+    <header id="header" style="position: relative; margin-bottom: 40px;">
+        <div class="header-container">
+            <h1 class="logo">GAME<span>VAULT</span></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Tienda</a></li>
+                    <li><a href="api-docs.html" class="active">Documentación API</a></li>
+                    <li><a href="arquitectura.html">Arquitectura DB</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="user-status-nav">
+                    <span id="user-level">NIVEL 1</span>
+                    <div class="xp-bar-nav">
+                        <div id="xp-fill" style="width: 0%;"></div>
+                    </div>
+                    <span id="xp-text" style="font-size: 0.75rem; color: var(--text-dim);">0/100 XP</span>
+                </div>
+                <button id="btn-logout" class="btn-logout" title="Cerrar Sesión Corporativa">❌</button>
+            </div>
+        </div>
+    </header>
+
+    <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+
+        <h1 class="cyber-title" style="font-size: 2.5rem; margin-bottom: 5px;">REST API SPECIFICATIONS</h1>
+        <p style="color: var(--text-dim); margin-bottom: 40px;">Documentación de Endpoints operativos bajo el servidor
+            Spring Boot (Port: 8080).</p>
+
+        <div class="server-terminal" style="margin-bottom: 40px;">
+            <div class="terminal-header">
+                <span
+                    style="background: #2581ff; color: #fff; padding: 2px 8px; font-size: 0.75rem; font-weight: bold; border-radius: 3px;">POST</span>
+                <strong style="margin-left: 10px;">/api/auth/login</strong>
+            </div>
+            <div class="terminal-body"
+                style="font-family: monospace; font-size: 0.9rem; line-height: 1.5; height: auto;">
+                <p style="color: var(--accent-green); margin-bottom: 15px;">// Procesa la llave de seguridad corporativa
+                    y genera la sesión activa.</p>
+
+                <span style="color: var(--accent); display: block; margin-bottom: 5px;">Parámetros del Body
+                    (application/json):</span>
+                <table
+                    style="width: 100%; border-collapse: collapse; text-align: left; margin-bottom: 15px; font-size: 0.85rem;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--border); color: #fff;">
+                            <th style="padding: 6px 0;">Campo</th>
+                            <th>Tipo</th>
+                            <th>Obligatorio</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: #ccc;">
+                        <tr style="border-bottom: 1px solid #141920;">
+                            <td style="padding: 6px 0; color: var(--accent-green);color: #000000;">username</td>
+                            <td style="color: #000000;">String</td>
+                            <td style="color: var(--accent);color: #000000;">SÍ (admin)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #141920;">
+                            <td style="padding: 6px 0; color: var(--accent-green);color: #000000;">password</td>
+                            <td style="color: #000000;">String</td>
+                            <td style="color: var(--accent);color: #000000;">SÍ (12345)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <span style="color: var(--accent);">Payload Requerido:</span>
+                <pre
+                    style="color: #ccc; background: #0c0f12; padding: 10px; margin: 5px 0 15px 0; border: 1px solid #1a222d;">{
+  "username": "admin",
+  "password": "█████"
+}</pre>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <span style="color: var(--accent-green);">Respuesta Exitosa (200 OK):</span>
+                        <pre
+                            style="color: var(--accent-green); background: #0c0f12; color: #ccc; padding: 10px; margin-top: 5px; border: 1px solid #1a222d;">{
+  "status": "authenticated",
+  "sessionToken": "gv_token_f89342a1b9",
+  "username": "admin"
+}</pre>
+                    </div>
+                    <div>
+                        <span style="color: #ff4444;">Respuesta Errónea (401 Unauthorized):</span>
+                        <pre
+                            style="color: #ff4444; background: #0c0f12; padding: 10px; margin-top: 5px; border: 1px solid #1a222d;">{
+  "status": "error",
+  "message": "Usuario o clave incorrectos."
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="server-terminal" style="margin-bottom: 40px;">
+            <div class="terminal-header">
+                <span
+                    style="background: #2bca74; color: #000; padding: 2px 8px; font-size: 0.75rem; font-weight: bold; border-radius: 3px;">GET</span>
+                <strong style="margin-left: 10px;">/api/products/all</strong>
+            </div>
+            <div class="terminal-body"
+                style="font-family: monospace; font-size: 0.9rem; line-height: 1.5; height: auto;">
+                <p style="color: var(--accent-green); margin-bottom: 15px;">// Intercepta el catálogo mapeado desde el
+                    Bean de persistencia de JPA.</p>
+
+                <span style="color: var(--accent-green);">Respuesta Exitosa (200 OK) - Array de Objetos:</span>
+                <pre
+                    style="color: #ccc; background: #0c0f12; padding: 10px; margin-top: 5px; border: 1px solid #1a222d;">[
+  {
+    "id": 1,
+    "nombre": "Cyber World 2077",
+    "cat": "Juego",
+    "precio": 39.99,
+    "xp": 40,
+    "img": "https://..."
+  }
+]</pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

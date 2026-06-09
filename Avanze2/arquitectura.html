@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVault | Arquitectura de Sistemas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body style="background: var(--bg); display: block; overflow-y: auto;">
+
+    <header id="header" style="position: relative; margin-bottom: 40px;">
+        <div class="header-container">
+            <h1 class="logo">GAME<span>VAULT</span></h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Tienda</a></li>
+                    <li><a href="api-docs.html">Documentación API</a></li>
+                    <li><a href="arquitectura.html" class="active">Arquitectura DB</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="user-status-nav">
+                    <span id="user-level">NIVEL 1</span>
+                    <div class="xp-bar-nav">
+                        <div id="xp-fill" style="width: 0%;"></div>
+                    </div>
+                    <span id="xp-text" style="font-size: 0.75rem; color: var(--text-dim);">0/100 XP</span>
+                </div>
+                <button id="btn-logout" class="btn-logout" title="Cerrar Sesión Corporativa">❌</button>
+            </div>
+        </div>
+    </header>
+
+    <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+
+        <h1 class="cyber-title" style="font-size: 2.5rem; margin-bottom: 5px;">ARQUITECTURA & LOGICA DE NEGOCIO</h1>
+        <p style="color: var(--text-dim); margin-bottom: 40px;">Diagramación técnica de los modelos de datos, capas
+            lógicas y middleware aplicados en la plataforma corporativa.</p>
+
+        <div
+            style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 8px; border: 1px solid #1a1f26; margin-bottom: 30px;">
+            <h2 style="color: var(--accent); font-family: 'Rajdhani'; font-size: 1.8rem; margin-bottom: 10px;">
+                Middleware de Descuento Dinámico</h2>
+            <p style="color: #000000; line-height: 1.6;">
+                La aplicación utiliza un patrón de diseño interceptor para la manipulación de precios en tiempo real.
+                Cuando la tienda ejecuta el renderizado de la UI, el objeto <code
+                    style="color: var(--accent-green);">SecurityMiddleware</code> intercepta el costo base de la base de
+                datos relacional y calcula un <strong>10% de descuento automático</strong> de forma síncrona si y solo
+                si las propiedades del cliente global registran un <code
+                    style="color: var(--accent);">nivel >= 5</code>.
+            </p>
+        </div>
+
+        <div
+            style="background: rgba(255,255,255,0.02); padding: 30px; border-radius: 8px; border: 1px solid #1a1f26; margin-bottom: 30px;">
+            <h2 style="color: var(--accent-green); font-family: 'Rajdhani'; font-size: 1.8rem; margin-bottom: 15px;">
+                Estructura de Capas del Servidor (Backend Architecture)</h2>
+            <p style="color: #000000; margin-bottom: 20px; line-height: 1.6;">
+                El ecosistema de Spring Boot se segmenta bajo el patrón arquitectónico desacoplado, asegurando el flujo
+                unidireccional de la información:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+                <div
+                    style="background: #06080c; padding: 15px; border-radius: 4px; border-left: 3px solid var(--accent);">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Controller Layer</strong>
+                    <span style="color: var(--text-dim); font-size: 0.85rem; color: #ffffff;">Expone los Endpoints
+                        RESTful públicos y
+                        gestiona las solicitudes de recursos HTTP mediante anotaciones
+                        <code>@RestController</code>.</span>
+                </div>
+                <div
+                    style="background: #06080c; padding: 15px; border-radius: 4px; border-left: 3px solid var(--accent-green);">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Repository Layer (JPA)</strong>
+                    <span style="color: var(--text-dim); font-size: 0.85rem;color: #ffffff">Administra la abstracción de
+                        consultas
+                        relacionales abstrayendo SQL nativo a través de interfaces extendidas de
+                        <code>JpaRepository</code>.</span>
+                </div>
+                <div style="background: #06080c; padding: 15px; border-radius: 4px; border-left: 3px solid #2581ff;">
+                    <strong style="color: #fff; display: block; margin-bottom: 5px;">Persistence Layer (H2)</strong>
+                    <span style="color: var(--text-dim); font-size: 0.85rem;color: #ffffff">Motor transaccional en
+                        memoria relacional
+                        que resguarda las entidades físicas de forma volátil durante el tiempo de ejecución.</span>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="color: #fff; font-family: 'Rajdhani'; font-size: 1.8rem; margin-bottom: 15px;">Diccionario de Datos
+            (Modelo de Persistencia)</h2>
+        <table style="width: 100%; border-collapse: collapse; text-align: left; color: #ccc; margin-bottom: 5px;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--accent); background: rgba(255,255,255,0.01);">
+                    <th style="padding: 12px; color: #fff;">Campo</th>
+                    <th style="padding: 12px; color: #fff;">Tipo de Dato</th>
+                    <th style="padding: 12px; color: #fff;">Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">id</td>
+                    <td style="padding: 12px; color: var(--accent);color: #000000">Long (PK)</td>
+                    <td style="color: #000000">Identificador único e incremental inyectado de forma automática en la
+                        base de datos.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">nombre</td>
+                    <td style="padding: 12px; color: #000000">String (Varchar)</td>
+                    <td style="color: #000000">Denominación comercial del producto (Juego o pieza de Hardware).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">cat</td>
+                    <td style="padding: 12px; color: #000000">String (Varchar)</td>
+                    <td style="color: #000000" |>Categoría de segmentación del catálogo utilizada por los filtros del
+                        Frontend.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">precio</td>
+                    <td style="padding: 12px; color: #000000">Double (Decimal)</td>
+                    <td style="color: #000000">Valor monetario base bruto sujeto a validaciones transaccionales.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">xp</td>
+                    <td style="padding: 12px; color: #000000">Integer</td>
+                    <td style="color: #000000">Monto de experiencia que se transmite al perfil del usuario tras
+                        finalizar un checkout válido.
+                    </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #1a1f26;">
+                    <td style="padding: 12px; font-weight: bold; color: var(--accent-green);color: #000000">img</td>
+                    <td style="padding: 12px; color: #000000">String (Text)</td>
+                    <td style="color: #000000">Ruta URL string absoluta del recurso multimedia visual renderizado en la
+                        card.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

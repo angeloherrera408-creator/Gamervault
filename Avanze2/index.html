@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameVault | Tienda Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="stylos.css">
+</head>
+
+<body>
+
+    <div class="xp-container">
+        <div class="user-info">
+            <span id="user-level" class="level-badge">NIVEL 1</span>
+            <span id="xp-text" class="xp-text">0 / 100 XP</span>
+        </div>
+        <div class="xp-bar-bg">
+            <div id="xp-fill" class="xp-fill"></div>
+        </div>
+    </div>
+
+    <div id="login-overlay" class="modal-overlay active" style="justify-content: center; align-items: center;">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">GAME<span>VAULT</span></div>
+                <p>AUTENTICACIÓN DE USUARIO</p>
+            </div>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="user-name">System User</label>
+                    <input type="text" id="user-name" name="username" placeholder="Ingresa tu alias" required>
+                </div>
+                <div class="input-group">
+                    <label for="user-pass">Security Key</label>
+                    <input type="password" id="user-pass" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="login-options">
+                    <label><input type="checkbox" name="remember"> Recordar sesión</label>
+                    <a href="#">¿Olvidaste tu llave?</a>
+                </div>
+
+                <button type="submit" id="btn-login" class="btn-primary" style="width: 100%;">
+                    INICIAR ENLACE
+                </button>
+            </form>
+
+            <div id="login-status" class="terminal-mini">
+                &gt; Esperando credenciales...
+            </div>
+        </div>
+    </div>
+
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">GAME<span>VAULT</span></div>
+                <ul class="nav-links">
+                    <li><a href="#">Tienda</a></li>
+                    <li><a href="api-docs.html">Api</a></li>
+                    <li><a href="arquitectura.html">Arquitectura</a></li>
+                </ul>
+                <div class="header-actions">
+                    <button id="btn-open-cart" class="btn-primary">
+                        🛒 Mi Carrito (<span id="cart-count">0</span>)
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main style="padding-top: 40px;">
+
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="badge">TOP TENDENCIA</span>
+                    <h1>DOMINA EL<br>CAMPO DE BATALLA</h1>
+                    <p style="color: var(--text-dim); margin-bottom: 30px;">
+                        Experimenta la nueva generación de shooters tácticos con gráficos ultra realistas.
+                    </p>
+                    <button class="btn-primary">VER DETALLES</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="margin-top: 60px;">
+            <div class="perks-grid">
+                <div class="perk-card locked" id="perk-discount">
+                    <span class="perk-icon">💎</span>
+                    <h4>Descuento Elite</h4>
+                    <p>10% OFF en todos los juegos (Nivel 5)</p>
+                </div>
+                <div class="perk-card" id="perk-fast-load">
+                    <span class="perk-icon">⚡</span>
+                    <h4>Prioridad de Red</h4>
+                    <p>Carga de API Instantánea (Nivel 2)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="margin-top: 40px;">
+            <div class="filter-header"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 15px;">
+                <h2 style="font-size: 1.5rem; color: var(--accent);">Explorar Inventario</h2>
+                <div class="filter-pills">
+                    <button class="pill active" data-categoria="Todos">Todos</button>
+                    <button class="pill" data-categoria="Juego">Juegos</button>
+                    <button class="pill" data-categoria="Hardware">Hardware</button>
+                    <button class="pill" data-categoria="Consola">Consolas</button>
+                </div>
+            </div>
+
+            <div class="quests-container" style="margin-top: 30px;">
+                <div class="quest-list">
+                    <div class="quest-item">
+                        <div class="quest-info">
+                            <h4>🎒 Coleccionista Novato</h4>
+                            <p style="color: var(--text-dim); font-size: 0.9rem;">Añade 3 productos al carrito.</p>
+                        </div>
+                        <div class="quest-reward">+150 XP</div>
+                    </div>
+                    <div class="quest-item">
+                        <div class="quest-info">
+                            <h4>💎 Cliente VIP</h4>
+                            <p style="color: var(--text-dim); font-size: 0.9rem;">Supera los $100 en una sola
+                                transacción.</p>
+                        </div>
+                        <div class="quest-reward">+300 XP</div>
+                    </div>
+                    <div class="quest-item">
+                        <div class="quest-info">
+                            <h4>🔥 Racha Diaria</h4>
+                            <p style="color: var(--text-dim); font-size: 0.9rem;">Inicia sesión 2 días seguidos.</p>
+                        </div>
+                        <div class="quest-status" style="color: var(--text-dim);">🔒 Bloqueado</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products container">
+            <h2>Juegos Destacados</h2>
+            <div class="grid" id="grid-productos">
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="reward-card" id="reward-box">
+                <div class="box-icon">🎁</div>
+                <div class="box-info">
+                    <h3>Caja de Suministros Diaria</h3>
+                    <p id="reward-status" style="color: var(--text-dim); margin-bottom: 15px;">¡Hay una recompensa lista
+                        para ti!</p>
+                    <button id="btn-claim" class="btn-primary">ABRIR CAJA</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="padding: 40px 0;">
+            <h2>Reseñas de la Comunidad</h2>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 30px;">
+                <div class="testimonial-card">
+                    <p>"La mejor tienda para armar mi setup gaming. El sistema de niveles es adictivo."</p>
+                    <small>— @GamerPro_99</small>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Increíble catálogo. Los bonos de XP me ayudaron a conseguir mi primer descuento."</p>
+                    <small>— @Elena_Pixel</small>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Precios competitivos y la interfaz es de otro mundo. ¡Recomendado!"</p>
+                    <small>— @CyberHunter</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="container technical-logs">
+            <div class="server-terminal">
+                <div class="terminal-header">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <strong style="font-size: 0.75rem; font-family: sans-serif; color: #666; margin-left: 10px;">SERVER
+                        CONSOLE (API v1.0)</strong>
+                </div>
+                <div class="terminal-body" id="server-logs">
+                    &gt; [INFO] Inicializando servicios de GameVault...<br>
+                    &gt; [DB] Estableciendo conexión con la base de datos... OK<br>
+                    &gt; [SERVER] Esperando peticiones en puerto 3000...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-modal" class="modal-overlay">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h2>Tu Carrito</h2>
+                <button id="close-cart" class="btn-close">✖</button>
+            </div>
+
+            <div class="cart-items" id="cart-items">
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-total">Total: $<span id="cart-total-price">0.00</span></div>
+                <button id="btn-checkout" class="btn-primary" style="width: 100%;">COBRAR AHORA</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="cart-panel checkout-card">
+            <div class="cart-header">
+                <h2>Finalizar Compra 💳</h2>
+                <button id="close-checkout" class="btn-close">✖</button>
+            </div>
+
+            <div class="checkout-body">
+                <div class="resumen-pago">
+                    <p style="margin: 0; font-weight: bold; color: white;">Total a Transferir:</p>
+                    <h2 id="checkout-total" style="font-size: 2.2rem; color: var(--accent-green); margin-top: 5px;">
+                        $0.00</h2>
+                </div>
+
+                <form id="form-pago">
+                    <div class="input-group">
+                        <label for="card-name">Nombre en la Tarjeta</label>
+                        <input type="text" id="card-name" name="cardName" placeholder="Ej. Juan Pérez" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <input type="text" id="card-number" name="cardNumber" placeholder="0000 0000 0000 0000"
+                            maxlength="16" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="input-group">
+                            <label for="card-expiry">Expiración</label>
+                            <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/AA" maxlength="5"
+                                required>
+                        </div>
+                        <div class="input-group">
+                            <label for="card-cvv">CVV</label>
+                            <input type="password" id="card-cvv" name="cardCvv" placeholder="***" maxlength="3"
+                                required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                        CONFIRMAR PAGO SEGURO
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="achievement-toast" class="achievement">
+        <span class="achievement-icon">🏆</span>
+        <div>
+            <strong style="display: block; font-size: 0.9rem;">¡LOGRO DESBLOQUEADO!</strong>
+            <span id="achievement-desc" style="font-size: 0.8rem; color: var(--text-dim);">Has completado una
+                misión.</span>
+        </div>
+    </div>
+
+    <script src="scritp.js"></script>
+</body>
+
+</html>
